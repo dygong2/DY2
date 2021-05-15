@@ -1,0 +1,381 @@
+---
+title: "Why repress? Authoritarian regime type and repression on popular protests"
+author: "Do Young Gong"
+date: "Spring 2021"
+output:
+  pdf_document:
+    number_sections: yes
+    fig_caption: yes
+    latex_engine: xelatex
+    citation_package: biblatex
+    keep_tex: yes
+    fig_height: 8
+    fig_width: 8
+  word_document: default
+graphics: yes
+geometry: left=1.25in,right=1.25in,top=1in,bottom=1in
+fontsize: 10pt
+bibliography: classbib.bib
+biblio-style: authoryear-comp
+---
+
+```{r setup, echo=FALSE, results=FALSE, include=FALSE, cache=FALSE}
+library(dplyr)
+library(mice)
+library(lattice)
+library(survival)
+library(readxl)
+library(tidyverse)
+library(car)
+library(DeclareDesign)
+library(knitr)
+library(xtable)
+library(estimatr)
+library(stargazer)
+library(MASS)
+library(RItools)
+library(arm)
+library(optmatch)
+library(ggstatsplot)
+```
+\section{Research Question}
+
+Why do authoritarian leaders sometimes use repression while at other times not, and why do y use different types – non-violent or violent – of repression on popular protests? Authoritarian leaders’ use of repression should be understood in a large context of autocratic survival. They mostly face various types of threats – those from internal elites, the public, and outside the country – and how they respond to each threat is interrelated to other types of threats. Past efforts have called attention to the institutionalization of these multiple threats, but leave unanswered the question of how the existence of one threat influences the responses on another type.
+
+In this study, I explore how different authoritarian regime types incur a different degree of internal threats to an autocrat, and how this determines his measures on popular protests. The degree of threats imposed by internal elites would influence an autocrat’s need to earn public support and the degree of threat perception by given popular protests. These factors will determine the extent to which they use repression on popular protests as well as the types of repression. The variation among autocracies is not very much explored, and considering that they are noticeably growing phenomena worldwide, understanding the dynamics of popular protests in autocracies is important in both theoretical and practical sense.
+
+
+\section{Theory and Hypotheses}
+
+All else being equal, when autocrats are highly threatened by internal elites, they might feel more threatened by a given popular protest. Considering that popular management and elite power-sharing are twin problems in autocracies, it is important to figure out what determines the degree of threats from internal elites to understand the use of repression in a broader context of authoritarian survival.
+
+Military regimes break down more readily than do other types of authoritarianism because of the challenges from internal elites. In personalist regimes, the institutions are not developed well, due to the potential challenges from the internal elites (Geddes, 2003: 65-66). Meanwhile, regimes with a ruling party remain more stable (Miller, 2020: 773). Cadres in single-party regimes have few reasons to desert in normal circumstances. Thus, single-party regimes last longer than either military or personalist regimes (Geddes, 2003: 68).
+
+In summary, autocrats in military regimes and personalist regimes are more vulnerable to threats from internal elites, compared to those from party-based regimes. All else being equal, when these autocrats are faced with a given protest, their perceived threat might be higher than those from party-based regimes. Thus, these autocrats’ incentives to repress popular protests increase. However, autocrats from both military and personalist regimes face a dilemma: as they have greater risks of challenges from elites, their incentives to earn public support also increase. Thus, they need to repress the public to remove the threats, but they also need to minimize the side-effects of the repression. Thus, instead of solely relying on violent repression which requires high legitimacy costs, they might use a mixed strategy of violent and non-violent means of repression, which helps them to hold power by increasing barriers for collective action and decreasing the opposition's capacity to mobilize against incumbent regimes. (Escriba-Folch 2013). On the other hand, autocrats who have fewer threats from internal elites are not desperate in earning popular support. Here is my hypothesis.
+
+Hypothesis: Autocrats in military regimes and personalist regimes are less likely to use violent repression, while those in party-based regimes use more violent repression.
+
+
+\section{Data and Research Design}
+
+For protests event and government responses, I will use the Nonviolent and Violent Campaigns and Outcomes dataset, which is a multi-level data collection that captures major nonviolent and violent resistance campaigns around the globe from 1900-2013. The data project has been conducted at the University of Denver. This data collection project seeks to look inside both nonviolent and violent campaigns, notably at the type, sequence, and outcomes of different tactics employed by unarmed civilians and armed insurgents. The dataset provides information on the number of groups, tactics, campaign goals, government responses, etc. 
+
+The outcome variable would be 'state posture', which captures the degree of conciliation or repression embedded in the regime's actions in reaction to campaign activity. The variable ranges from 1 (full accommodation) to 7 (material and/or physical repression intended to result in death). In this variable, 1~3 indicates concessions, 4 is neutral means, 5 is about non-violent repression, and 6-7 is physical repression. From this, we can know the use and types of repression by governments. 
+
+For the explanatory variable, I will use the autocratic regime type created by Geddes et al.(2014). In their dataset, party-based regimes include party-based, party-military, party-personal, and party-personal-military regimes. Military regimes include military and military-personal regimes. There are also personalist and monarchical regimes. I coded military as 1, personalist as 2, party-based as 3, and monarchy as 4. 
+
+For covariates, I will use tactic choice by protest groups, camp goals during the protest provided by the Nonviolent and Violent Campaigns and Outcomes dataset. Tactic choices range from violent, non-violent, and mixed activities. Camp goals include regime change, significant institutional reform, policy change, territorial secession, greater autonomy, and anti-occupation. I also incorporated state-level covariates, including GDP, population, and military spending. GDP and population were extracted from World Bank, and the military spending data was created from SIPRI. 
+
+I will first conduct linear regression and robust linear regression. Then, I will use several matching methods to balance covariates and use the result as a fixed effect in the regression model. Finally, I will evaluate the test.
+
+
+\section{Advantages and Disadvantages of this Research Design}
+
+I will conduct an observational study with an observed dataset on popular protests in authoritarian regimes and the degree of government repression. The area of popular protests and government responses can be hardly studied through field or lab experiments. For example, Hummel (2019) conducted a survey experiment on the effect of government concession during popular protests in authoritarian states. Although the research topic is interesting and had some useful implications, this study used a hypothetical situation in the experiment, which would not be the same in the real world. People answer something in a hypothetical situation but might behave differently. This is partly since only the vague protest situation was given in the experiment. Other factors, such as the state's economic, military and population index or the size, the use of violence of protests were not considered in the experiment. 
+Moreover, it is almost impossible for a researcher to experiment with authoritarian leaders. Thus, using an observational study is the best option for this topic. With observational datasets, we can understand what happened in the real-world protests. We do not have to worry about the gap between the experimental setting and real-world politics.
+
+Despite the advantages of the observational study, however, this approach has a critical disadvantage: the lack of causality. In an observational study, we can know whether there is an association between the explanatory and the outcome variables. However, this is only a correlation, not a causal relationship. Even though there is an associational relationship between authoritarian regime type and the use of repression on popular protests was found in an observational research design, we do not know whether the regime type caused the repression. Moreover, observational studies also have a selection bias problem. This arises when the data is not randomly selected from the population. As we can have access to datasets on what already happened, the samples in our dataset are hardly representative of the whole population. Another serious issue arises from confounders. Unlike the randomization experiment in which the treatment is randomly assigned to groups, there are possibly covariates that influence both the explanatory and the outcome variables. In randomization, all observed covariates are balanced between the treatment and the control groups and we can guarantee the difference between the two groups results from the treatment effect only. On the other hand, in an observational study, even though the explanatory variable seemingly caused the outcome variable, we cannot ascertain whether the effect was caused by the explanatory variable. Due to these disadvantages, we are not able to be confident in the internal validity of the research design, but cannot make a causal inference from this design. 
+
+In this analysis, therefore, I will address the problems of observational studies using matching. I will try some matching methods to balance the observed covariates. Ideally, the treatment and control groups should look identical across all the observed covariates. If we successfully match and balance the two groups, we can "control" the observed covariates, and see whether the explanatory variable (authoritarian regime type) causes the outcome variable (the level of repression). First, I will conduct linear regression and robust linear regression analyses. Then, I will create a propensity score and Mahalanobis distance for matching. After comparing the performance of the two methods, I will choose a more effective one that improves the balance between the two groups, and use the matched result as a fixed effect in the regression model.
+
+
+\section{Measures and indices}
+
+The outcome variable is a regime response to popular protests, and the explanatory variable is the autocratic regime type. The covariates I would like to control are two types: protest-specific variables and state-level variables. For protest-specific variables, the issue raised in protests, tactical choice of the protest groups, and the number of participants is included. These variables are important ones that influence a leader's perceived threat by a given protest. For state-level variables, I included GDP, population, and military spending. Economic problems and the number of the population are regarded as important factors which cause protests more likely and can be related to the increased use of repression. Military spending is related to a government's repressive capacity. The unit of analysis is protest events, and the data sources and scales for each variable are as follows: 
+
+
+(1) The outcome variable (repress): The variable st_posture is from the Nonviolent and Violent Campaigns and Outcomes dataset. It captures the degree of conciliation or repression embedded in the regime's actions in reaction to campaign activity. The variable ranges from 1 (full accommodation) to 7 (material and/or physical repression intended to result in death). In this variable, 1-3 indicates concessions, 4 is neutral means, 5 is about non-violent repression, and 6-7 is physical repression. I recoded concessions (1-3) as 0, neutral (4) as 1, non-violent repression (5) as 2, and violent repression (6-7) as 3. 
+
+
+(2) The explanatory variable (regime type): I will use the autocratic regime type created by Geddes et al. (2014). In their dataset, party-based regimes include party-based regimes: party-based, party-military, party-personal, and party-personal-military regimes. Military regimes include military and military-personal regimes. There are also personalist and monarchical regimes. I dropped the monarchical regime in this analysis, which did not have many protests (but will include in the future analysis). I coded the military and personalist (higher threats from internal elites) as 1, the party-based (fewer threats from internal elites) as 2.
+
+(3) Covariates:
+
+(3-1) Protest-specific covariates (tactical_choice, camp_goals, num_partic_event): These variables are also from the Nonviolent and Violent Campaigns and Outcomes dataset. Tactic choices range from violent, non-violent, and mixed activities (0-3). Camp goals include regime change, significant institutional reform, policy change, territorial secession, greater autonomy, and anti-occupation (0-6). The number of participants is a continuous variable.
+
+(3-2) State-level covariates (GDP, pop, military_spending): I incorporated GDP and the population in the year of each protest from the World Bank. Military spending is extracted from the Stockholm International Peace Research Institute (SIPRI) Military Expenditure Database.
+
+
+\section{Research Design}
+
+In the analysis, I will make a comparison between certain types of authoritarian regimes in regards to their use of repression toward the public. Of course, each protest is different in terms of the characteristics of protests (size, the use of violence, goals, or issues) and the state-level characteristics. Therefore, it is absurd to simply compare each protest by authoritarian regime type, because we cannot ascertain that the regime type caused the different levels of repression. That is why we need to take account of not only the explanatory variable but other covariates. I will use matching in this analysis. Although a linear regression model with multiple covariates is one of the most widely used statistical methods, it requires many assumptions: the relationship between the explanatory and the outcome variable should be linear, the variance of residuals is the same for any value of X, the observations should be independent of each other, and Y should be normally distributed for any value of X. I will conduct the linear regression analysis below and check whether these assumptions are met. Of course in real-world data, these assumptions are hard to be met. 
+
+Regarding covariates, we often include all the observed covariates in a linear model and say that we "controlled for" covariates. However, we are removing the linear relationship between the covariates and the outcome variable by including those variables in the linear model. Thus, to control the influence of covariates, I will rather use the method of matching in this analysis. Matching allows us to balance across covariates between the two groups. The ideal goal of the matching is to equate the balance across covariates between the treatment and the control groups, and by doing this, we can know the true effect of the treatment. I will first conduct a balance test before matching. Then I will compare the balance test results of the two matching methods and figure out which method performs better in terms of balancing. If the matched result improved the balance across the observed covariates between the two groups, then using the matching allows us to understand the effect of the regime type on the level of repression.
+
+
+```{r, results=FALSE, message=FALSE, warning=FALSE, cache=FALSE, fig.show='hide'}
+
+repression <- read_excel("C:/Users/dy920/Documents/data2.xlsx") ## importing data
+repression$num_partic_event <- as.numeric(repression$num_partic_event)
+
+## some recodings
+repression$regimetype <- ifelse(repression$regime_type == 1 & 2, 1, 0) ## regime 1 == military & personalist regimes; 0 == party-based regime 
+repression$repress <- ifelse(repression$st_posture == 1 & 2 & 3, 0, (ifelse(repression$st_posture == 4, 1, (ifelse(repression$st_posture == 5, 2, 3))))) 
+## repress 0 == no repression, 1 == neutral, 2 == non-violent repression, 3 == violent repression
+
+
+repression1 <- repression %>% dplyr::select(regimetype, repress, camp_goals, tactical_choice, num_partic_event, gdp, pop, military_spending) ## selecting variables that are necessary to this analysis
+
+```
+
+\section{Plans for missing data, extreme outcome, and covariate}
+
+```{r, results=FALSE, message=FALSE, warning=FALSE, cache=FALSE, fig.show='hide'}
+
+missing <- mice(repression1, maxit = 0)
+missing$nmis ## Checking missing values in each variable
+
+repression1 <- repression1 %>% drop_na(camp_goals)
+repression1 <- repression1 %>% drop_na(num_partic_event)
+
+
+missing_military_spending <- is.na(repression1$military_spending)
+
+
+## I imputed missing values for weight and length using multiple imputation with 5 imputed datasets
+set.seed(1253)
+imputed_Data <- mice(repression1, m=5, maxit = 50, method = 'cart', seed = 500) 
+
+## Classification and regression trees (CART) is a popular class of machine learning algorithms, which is a predictive algorithm that determines howvariable’s values can be predicted based on other values (https://rforpoliticalscience.com/2020/07/28/impute-missing-values-with-mice-package-in-r/).
+summary(imputed_Data)
+repression1_complete <- complete(imputed_Data) 
+sum(sapply(repression1_complete, function(x) { sum(is.na(x)) })) ## Confirm no NAs
+
+Q_rp <- quantile(repression1_complete$repress, probs=c(.25, .75), na.rm = FALSE)
+
+summary(Q_rp, Q_rg)
+
+```
+To deal with missing values in the explanatory, the outcome variable, and other covariates, I firstly checked which variables contain missing values. The explanatory variable (regime type) and the outcome variable (repress) did not have any missing values. However, other covariates (camp_goals, num_partic_event, GDP, and military spending) had missing values. In particular, GDP and military spending had quite many missing values (89 and 142, respectively). The easiest way to deal with missing values is to use na.omit. However, na.omit eliminates all rows if at least one variable has a missing value and we might lose too much information. Thus, I think it might be better to use other ways to deal with missing values. Camp_goals and num_partic_event, the number of missing values is not large. Moreover, as they are event-specific variables, I cannot arbitrarily fill those missing values with other values. Thus, I decided to drop the data which included missing values in either camp_goals or num_partic_event. On the other hand, GDP and military spending can be imputed based on other values. I imputed missing values for weight and length using multiple imputations with 5 imputed datasets. I used the Classification and regression trees (CART) method, which uses machine learning algorithms. CART is a predictive algorithm that determines how a given variable's values can be predicted based on other values. GDP and military spending can be possibly filled with some values based on other values. Thus, this method would be a good option to deal with the missing values in these variables. Meanwhile, as the outcome variable is 'repress', which only has 4 scales, I do not need to worry about the extreme values (I checked the 25 % and 75% quantile of the variable for fun).
+
+\section{Statistical Tests}
+
+\subsection{linear regression analyses}
+```{r, results=FALSE, message=FALSE, warning=FALSE, cache=FALSE, fig.show='hide'}
+
+## First, I created a simulated population based on the sample I have.
+
+pop <- declare_model(N = 1000, data = repression1_complete, handler = resample_data)
+outcome <- declare_potential_outcomes(repress ~ tau*regimetype-0.035*camp_goals + 0.81*tactical_choice -0.0000003*num_partic_event-0.0000000000008*gdp-0.000000001*pop+0.00005*military_spending, assignment_variables = "regimetype")
+assignment <- declare_assignment(assignment_variable = "regimetype")
+treatment_outcome <- declare_reveal(outcome_variables = "repress",
+                                             assignment_variables = "regimetype")
+
+my_design <- pop + outcome + assignment + treatment_outcome
+design <- redesign(my_design, tau=-0.36)
+
+set.seed(12345)
+dat1 <- draw_data(design) ## new simulated dataset
+
+
+lm1 <- lm(repress ~ regimetype + camp_goals + tactical_choice + num_partic_event + gdp + pop + military_spending, data = dat1)
+rlm1 <- rlm(formula = repress ~ regimetype + camp_goals + tactical_choice + num_partic_event + gdp + pop + military_spending, data = dat1)
+
+
+summary(lm1)
+summary(rlm1)
+
+vif_values <- vif(lm1)
+barplot(vif_values, main = "VIF Values",col = 'green')
+bad_vif <- 10
+abline(h = bad_vif, lwd = 3, lty = 2,col = 'red')
+
+
+plot(rlm1, which = 1)
+
+```
+First, I conducted linear regression and a robust linear regression analyses. The OLS model predicts that if an authoritarian state is military or personalist regime (regime == 1), there is an associated 0.36 percent decrease in the repression level. This indicates that military or personaist regime (regime == 1), whose leaders have higher threats from internal elites are 0.36% less likely to repress than those in party-based regime, who sees less threats from internal elites. P-value is less than 0.001. The robust linear regression shows a similar result. It shows that if an authoritarian state is military or personalist regime (regime == 1), there is an associated 0. 36 percent decrease in repression level, with the standard error of 0.06.
+
+As p-value less than 0.05 is typically regarded as "statistically significant", I can reject the null hypothesis in both the linear and robust linear regression models. However, there are many problems associated with these analyses. To perform a linear regression, several assumptions should be met: homogeneity of variance, independence of observations, normality, and linearity, as mentioned above. To see whether the explanatory variable and other covariates are correlated, I conducted a vif test. As a rule of thumb, a vif bigger than 10 indicates high multicollinearity. Three state-level covariates, gdp, pop, and military spending turned out to be highly correlated with other variables. 
+
+The easiest way to check the independent and identically distributed assumption is to create a residuals versus fitted value plot. I made a plot of the robust linear regression model. Heteroscedasticity appears as some of the residuals are concentrated in some points, which suggest heterogeneous variance. Moreover, they are not gathering aroung 0, which suggests that the error terms might have a mean of zero. From the plot above, We can see that many points deviate from the estimated regression line, which implies that the regression model does not fit the current data well. As the assumptions that are necessary to conduct a linear regression are hard to be met, the linear regression analysis does not give us meaningful implications. To overcome the disadvantage of the linear regression model with multiple covariates, I will use matching methods. Before doing that, I firstly simulated a datset with the existing data.  
+
+\subsection{Matching}
+```{r, results=FALSE, message=FALSE, warning=FALSE, cache=FALSE, fig.show='hide'}
+
+balfmla <- reformulate(c(names(dat1)[c(3:8)]), response="regimetype")
+balfmla
+
+
+xb0 <- xBalance(balfmla, strata=list(raw = NULL), data=dat1,
+                report=c("std.diffs","z.scores","adj.means",
+                         "adj.mean.diffs", "chisquare.test","p.values"))
+
+xb0
+```
+Before matching, I conducted a balance test to calculate standardized differences across covariates without the stratification. The goal of this test is to see if a treatment is associated with differences in covariates. The treatment and control groups should be roughly identical in their distributions of pretreatment variables (Hansen and Bowers 2008). The test shows that the chi-square value is 1.5 and the p-value is 0.68, which suggests that there is no reason to assume that there is a big difference between the two groups. However, at the same time, we cannot confidently say that the two groups are identical.
+
+```{r, results=FALSE, message=FALSE, warning=FALSE, cache=FALSE, fig.show='asis'}
+## Create propensity score
+
+glm <- bayesglm(balfmla,data=dat1,family=binomial)
+
+
+dat1$pscore <- predict(glm, type = "link")
+
+## Make distance matrices
+
+psdist <- match_on(regimetype~pscore, data=dat1)
+as.matrix(psdist)[1:5,1:5]
+
+caliper(psdist, 2)
+
+## fullmatch using the propensity score
+ps <- fullmatch(psdist, data=dat1)
+
+xbps <- xBalance(balfmla, strata=list(raw=NULL,ps=~ps),
+                   data=dat1, report=c("std.diffs","z.scores","adj.means",
+                                       "adj.mean.diffs", "chisquare.test","p.values"))
+
+## Create a rank-based Mahalanobis distance
+mhdist <- match_on(balfmla, data=dat1, method="rank_mahalanobis")
+
+## fullmatch using a rank-based Mahalanobis distance
+mhfull <- fullmatch(mhdist,data=dat1) ## min.controls=1 # min.controls=.5
+
+
+xb_mh <- xBalance(balfmla, strata=list(raw=NULL,mhfull=~mhfull),
+              data=dat1, report=c("std.diffs","z.scores","adj.means",
+                       "adj.mean.diffs", "chisquare.test","p.values"))
+
+xbps
+xb_mh 
+
+dat1$mhfull<-NULL
+dat1[names(mhfull),"mhfull"] <- mhfull
+
+
+plot(xbps)
+plot(xb_mh)
+```
+Now I created propensity score and Mahalanobis distance to match covariates. Before matching, the p-value of the chi-square is 1.49. If the two groups are identical, the chi-square value is 0. A bigger difference results in a bigger chi-square value. As the chi-square value is 1.49 before matching, I did matching covariates using both propensity score and Mahalanobis distance to improve the balance. 
+
+The propensity score shows an improvement. Chi-square value decreased to 0.49 and p-value increased to 0.92. The plot shows that the standardized differences significantly decreased in camp_goals, tactical_choice, num_partic_event, GDP, and military_spending. Only that in the population increased, but as a whole, the two groups are more balanced after matching with the propensity score. 
+
+
+On the other hand, the Mahalanobis distance has a worse result. The chi-square value increased to 4.12, while the p-value decreased to 0.25. The plot shows that the standardized differences in camp-goals, tactical_choice, num_partic_event, and GDP decreased, while that in pop and military_spending increased. Overall, the Mahalanobis distance did not improve the balance between the two groups. Thus, I will use the matching results using the propensity score.
+
+\section{Evaluation}
+```{r, results=FALSE, message=FALSE, warning=FALSE, cache=FALSE, fig.show='hide'}
+
+## 1. lm robust
+
+## 1-1. Declare an estimand
+estimator1 <- function(data){
+  bs <- coef(lm(repress~regimetype, data=dat1))
+  return(data.frame(estimand_label=c('regimetype'),
+                    estimand=bs[c('regimetype')],
+                    stringsAsFactors = FALSE))}
+
+estimand1 <- declare_estimand(handler = estimator1,
+                              label = "rltn")
+
+design_estimand1 <- design + estimand1
+
+
+## 1-2. lm_robust estimator
+lm_robust_estimator <- declare_estimator(
+  repress~regimetype,
+  estimand = c('regimetype'),
+  term = c('regimetype'),
+  model = lm_robust,
+  label="lm_robust")
+design_lm_robust <- design_estimand1+lm_robust_estimator
+design_lm_robust
+
+
+## 2. matching
+## 2-1. Declare an estimand
+estimator2 <- function(data) {
+  bs <- coef(lm(repress ~ regimetype + mhfull, data=dat1, subset=!is.na(mhfull)))
+  return(data.frame(estimand_label = "regimetype",
+                    estimand = bs["regimetype"],
+                    stringsAsFactors = FALSE))}
+estimand2 <- declare_estimands(handler = estimator2,
+                               label = "rltn2")
+design_estimand2 <- design + estimand2
+
+
+## 2-2. Matching estimator
+lm_match_estimator <- declare_estimator(
+  repress~regimetype,
+  estimand = c('regimetype'),
+  term = c('regimetype'),
+  model = stats::lm,
+  label="matching")
+
+
+## 3. Diagnosis
+
+## 3-1. lm and lm robust
+designs_full <- design_estimand1 + lm_robust_estimator
+set.seed(13579)
+sim_full <- simulate_design(designs_full, sims=500)
+
+diag1 <- diagnose_design(sim_full)
+
+
+### 3-2. lm with matching
+
+designs_match <- design_estimand2 + lm_match_estimator
+
+set.seed(24680)
+sim_match <- simulate_design(designs_match, sims=500)
+#xtable(head(sim_match[,c(2,4,5,7,8,9,10)], n=5))
+
+diag2 <- diagnose_design(sim_match)
+diag2
+
+diag1
+diag2
+
+
+```
+\subsection{Statistical Estimators}
+I used two estimators here. 'lm robust' estimator, and 'matching' estimator. The former one included all other covariates along with the explanatory variable. lm robust is known to be generally giving better accuracies over OLS by using a weighting mechanism to weigh down the influential observations. As stated above, including covariates altogether removes the linear relationship between the covariates and the outcome variable. Thus, if the relationships are not linear, we cannot say that we controlled the covariates. Matching estimator, on the other hand, balanced across all the observed covariates using the propensity score. As the two groups are balanced enough, we can isolate the treatment effect, and see whether the effect caused the difference between the two groups.
+
+The performance of estimators can be checked with 'bias' and 'rmse' in DeclareDesign. Bias tells us the expected difference between estimate and estimand. Bigger bias tells us that the estimation in our test shows a large difference from the estimand. On the other hand, RMSE is Root mean-square error. As the mean squared error is the difference between the observed value and the predicted value in the model, a smaller MSE indicates that the estimator is less biased. 
+
+The lm robust estimator has a bias of 0.02 and RMSE of 0.03, while the matching estimator reduced the bias to 0.01, and RMSE remained the same. This tells us that the estimated value in the lm robust model is 0.02 bigger than the estimand. The standard error of the biases is 0, which means that the estimates would not vary in the repeated experiments, and they remain consistent. On the other hand, the bias is smaller with the matching estimator. The estimated value is 0.01 bigger than the estimand. In terms of RMSE, the two estimators had the same values. The RMSE of 0.03 tells us that the difference between the observed value and the predicted value is not very large. The observations are well fit into the fitted line of the two estimators. 
+
+
+\subsection{Test performance}
+
+To check the test performance, I will see the power and the false positive rate of the tests. Power is the ability of a test to detect an effect of the treatment. If power is 0.03, for example, you can observe the estimate of 3%. Low statistical power implies a risk of Type II errors (a false negative). On the other hand, the False Positive indicates that the test inaccurately reports it is true even though the truth is negative. The false-positive rate is calculated by the number of false positives divided by the number of true negatives + the number of false positives. The false-positive rate of the test that makes up the confidence interval is the same as the coverage probability of a confidence interval. Power and false positive rate are important in evaluating whether the test is performing accurately in detecting the effect of the treatment. This can be known through 'power' and 'coverage' in DeclareDesign.
+
+
+In both tests, the power is 1, which means that the tests can detect an effect of the treatment. The two tests can successfully reject the null hypothesis of no effect. On the other hand, the coverage is 0.87 in the lm robust test, while is 0.92 in the test using matching. As coverage indicates the proportion of the time that the interval contains the true value of interest, an increase in coverage means that in the test with matching, the confidence intervals contain the truth more often.
+
+\subsection{Mock analysis}
+```{r, results=FALSE, message=FALSE, warning=FALSE, cache=FALSE, fig.show='hide'}
+
+## regression with matching using the propensity score
+
+lm_matching_ps <- lm(repress ~ regimetype + ps, data=dat1)
+matrix_coef <- summary(lm_matching_ps)$coefficients 
+coef <- matrix_coef[2, ]
+coef
+
+```
+Here I had a mock analysis that used a linear regression model with the fixed effects of matched data. I used the matched results with the propensity score I created. Then I fixed the matching results and conducted a linear regression analysis with the simulated data. The coefficient of the regime type is -0.366764. Substantively, authoritarian leaders who have higher threats from internal elites are less likely to use repression on popular protests compared to those who have fewer threats from internal elites. More specifically, the former groups of leaders use 0.36% less repression than the latter groups. This aligns well with the theory which explained that authoritarian leaders who have higher threats from the internal elites have a dilemma when it comes to using repression, and are less likely to use repression. 
+
+\section{Concluding remarks}
+
+In this study, I tested a theory of an authoritarian regime type and the use of repression in popular protests. Substantively, the results show that authoritarian leaders who are in personalist and military regimes, which have higher threats from internal elites, are less likely to use repression than those in party-based regimes This contradicts the conventional wisdom that military and personalist regimes are more repressive than the party-based regimes. 
+
+Methodologically, this paper shows that matching helps us to overcome the problems of "controlling for" in the linear regression model. Fixed effects regression model after matching performed better in terms of bias and coverage. I cannot ascertain that matching is always performing better than other methods, at least I should not blindly use the linear regression model because it does not "control for" covariates and require many assumptions.
+
+```{r ref.label=knitr::all_labels(), echo=TRUE, eval=FALSE}
+```
+
+\References{
+
+Chenoweth, E., Pinckney, J., & Lewis, O. (2018). Days of rage: Introducing the NAVCO 3.0 dataset. Journal of Peace Research, 55(4), 524–534.
+Escribà-Folch, A. (2013). Repression, political threats, and survival under autocracy. International Political Science Review, 34(5), 543–560.
+Geddes, B. (2003). Paradigms and sand castles: Theory building and research design in comparative politics. University of Michigan Press.
+Geddes, B., Wright, J., & Frantz, E. (2014). Autocratic breakdown and regime transitions: A new data set. Perspectives on Politics, 313–331.
+Hansen, B. B., & Bowers, J. (2008). Covariate balance in simple, stratified and clustered comparative studies. Statistical Science, 219–236.
+Hummel, S. J. (2019). Sideways Concessions and Individual Decisions to Protest. Comparative Politics, 52(1), 65–95.
+Miller, M. K. (2020). The autocratic ruling parties dataset: Origins, durability, and death. Journal of Conflict Resolution, 64(4), 756–782.
+World Bank https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
+SIPRI https://www.sipri.org/databases/milex}
